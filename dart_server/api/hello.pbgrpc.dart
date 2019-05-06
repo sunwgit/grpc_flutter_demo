@@ -14,15 +14,15 @@ import 'hello.pb.dart';
 export 'hello.pb.dart';
 
 class GretterClient extends $grpc.Client {
-  static final _$sayHello = $grpc.ClientMethod<HelloRequest, HelloReply>(
+  static final _$sayHello = $grpc.ClientMethod<HelloRequest, Person>(
       '/Gretter/SayHello',
       (HelloRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => HelloReply.fromBuffer(value));
+      ($core.List<$core.int> value) => Person.fromBuffer(value));
 
   GretterClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
 
-  $grpc.ResponseFuture<HelloReply> sayHello(HelloRequest request,
+  $grpc.ResponseFuture<Person> sayHello(HelloRequest request,
       {$grpc.CallOptions options}) {
     final call = $createCall(_$sayHello, $async.Stream.fromIterable([request]),
         options: options);
@@ -34,20 +34,19 @@ abstract class GretterServiceBase extends $grpc.Service {
   $core.String get $name => 'Gretter';
 
   GretterServiceBase() {
-    $addMethod($grpc.ServiceMethod<HelloRequest, HelloReply>(
+    $addMethod($grpc.ServiceMethod<HelloRequest, Person>(
         'SayHello',
         sayHello_Pre,
         false,
         false,
         ($core.List<$core.int> value) => HelloRequest.fromBuffer(value),
-        (HelloReply value) => value.writeToBuffer()));
+        (Person value) => value.writeToBuffer()));
   }
 
-  $async.Future<HelloReply> sayHello_Pre(
+  $async.Future<Person> sayHello_Pre(
       $grpc.ServiceCall call, $async.Future request) async {
     return sayHello(call, await request);
   }
 
-  $async.Future<HelloReply> sayHello(
-      $grpc.ServiceCall call, HelloRequest request);
+  $async.Future<Person> sayHello($grpc.ServiceCall call, HelloRequest request);
 }

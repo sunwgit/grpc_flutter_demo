@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:grpc/grpc.dart';
 
@@ -7,14 +8,15 @@ import './api/hello.pbgrpc.dart';
 
 class GreeterService extends GretterServiceBase {
   @override
-  Future<HelloReply> sayHello(ServiceCall call, HelloRequest request) async {
-    return new HelloReply()..message = 'Hello, ${request.name}!';
+  Future<Person> sayHello(ServiceCall call, HelloRequest request) async {
+    return Person()
+      ..name = 'jack${Random().nextInt(10)}'
+      ..age = Random().nextInt(10);
   }
 }
 
 Future<void> main(List<String> args) async {
-  final server = new Server([new GreeterService()]);
-  print('server.....');
+  final server = Server([GreeterService()]);
   await server.serve(port: 50051);
   print('Server listening on port ${server.port}...');
 }

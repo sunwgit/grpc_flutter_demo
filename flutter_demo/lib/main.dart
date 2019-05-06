@@ -29,8 +29,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-Future<HelloReply> _callServer(List<String> args) async {
-  final channel = ClientChannel('192.168.1.64',
+Future<Person> _callServer(List<String> args) async {
+  final channel = ClientChannel('192.168.10.15',
       port: 50051,
       options: const ChannelOptions(
           credentials: const ChannelCredentials.insecure()));
@@ -40,18 +40,21 @@ Future<HelloReply> _callServer(List<String> args) async {
 
   try {
     final response = await stub.sayHello(HelloRequest()..name = name);
-    print('Greeter client received: ${response.message}');
+    print('Greeter client received: \n');
+    print(response);
     return response;
   } catch (e) {
     print('Caught error: $e');
   } finally {
     await channel.shutdown();
   }
-  return HelloReply();
+  return Person();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String msg = 'Init';
+  Person _person = Person()
+    ..name = 'init'
+    ..age = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +62,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(child: Text(msg)),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '姓名:${_person.name}',
+          ),
+          Text(
+            '年龄:${_person.age}',
+          )
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _callServer(['HelloRequest']).then((_) {
             setState(() {
-              msg = msg == 'Init' ? _.message : 'Init';
+              _person = _;
             });
           });
         },

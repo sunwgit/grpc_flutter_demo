@@ -56,3 +56,33 @@ class HelloReply extends $pb.GeneratedMessage {
   void clearMessage() => clearField(1);
 }
 
+class Person extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('Person')
+    ..aOS(1, 'name')
+    ..a<$core.int>(2, 'age', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  Person() : super();
+  Person.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromBuffer(i, r);
+  Person.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) : super.fromJson(i, r);
+  Person clone() => Person()..mergeFromMessage(this);
+  Person copyWith(void Function(Person) updates) => super.copyWith((message) => updates(message as Person));
+  $pb.BuilderInfo get info_ => _i;
+  static Person create() => Person();
+  Person createEmptyInstance() => create();
+  static $pb.PbList<Person> createRepeated() => $pb.PbList<Person>();
+  static Person getDefault() => _defaultInstance ??= create()..freeze();
+  static Person _defaultInstance;
+
+  $core.String get name => $_getS(0, '');
+  set name($core.String v) { $_setString(0, v); }
+  $core.bool hasName() => $_has(0);
+  void clearName() => clearField(1);
+
+  $core.int get age => $_get(1, 0);
+  set age($core.int v) { $_setSignedInt32(1, v); }
+  $core.bool hasAge() => $_has(1);
+  void clearAge() => clearField(2);
+}
+
